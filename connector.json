@@ -1,0 +1,15 @@
+{
+  "id": "catfact",
+  "name": "Cat facts",
+  "data": "Random cat facts from catfact.ninja. Keeps only the facts you mark as favorite, in its own folder.",
+  "network": ["catfact.ninja"],
+  "entry": "src/catfact.mjs",
+  "tool": {
+    "bin": "catfact",
+    "commands": { "fact": "public", "facts": "public", "favorites": "public", "favorite": "write" }
+  },
+  "cards": {
+    "favorite": { "title": "Save a favorite cat fact", "verb": "Save", "fields": [["Fact", "--text"]] }
+  },
+  "auth": { "kind": "none" }
+}
