@@ -29,6 +29,7 @@ export default {
   help: [
     "  catfact fact                    one random cat fact",
     "  catfact facts [--limit 5]       several",
+    "  catfact meow                    one from meowfacts instead",
     "  catfact favorites               the ones you saved",
     '  catfact favorite --text "..."   save one (approval card)',
   ],
@@ -39,6 +40,11 @@ export default {
     async facts(ctx) {
       const limit = Math.min(Math.max(Number(ctx.flag("limit") ?? 5) || 5, 1), 20);
       return (await get(`/facts?limit=${limit}`)).data.map((f) => f.fact);
+    },
+    async meow() {
+      const res = await fetch("https://meowfacts.herokuapp.com/", { signal: AbortSignal.timeout(15_000) });
+      if (!res.ok) throw new Error(`meowfacts answered ${res.status}`);
+      return { fact: (await res.json()).data?.[0] };
     },
     async favorites() {
       return favorites();
